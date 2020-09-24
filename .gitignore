@@ -1,0 +1,11 @@
+**/vendor/
+/.cache/
+/.cover/
+/.env
+/.idea/
+/.vscode/
+/bin/
+/coverage.html
+/out/
+/test-results/
+/tmp/
