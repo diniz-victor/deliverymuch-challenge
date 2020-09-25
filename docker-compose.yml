@@ -1,0 +1,20 @@
+version: '3.3'
+
+services:
+    deliverymuch-challenge:
+        image: 'golang:1.15.2-alpine3.12'
+        working_dir: /go/src/github.com/deliverymuch-challenge
+        ports:
+            - 8080:8080
+        volumes:
+            - './:/go/src/github.com/deliverymuch-challenge'
+        environment:
+            LOG_HUMAN: "true"
+            LOG_LEVEL: "DEBUG"
+
+            GIPHY_API_TOKEN: "LyKGPGg76vk1mQ0jJM7mevHym3KM6NVC"
+        entrypoint:
+            - go
+            - run
+            - -mod=vendor
+            - ./cmd/api
