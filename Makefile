@@ -15,6 +15,11 @@ MINIMUM_COVERAGE = 70
 # Images that will be automatically built and published
 IMAGES = consumer
 
+vendor-build:
+	go mod vendor && go build
+
+setup: vendor-build run
+
 run:
 	@docker-compose up
 
