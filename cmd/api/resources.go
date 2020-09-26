@@ -22,7 +22,12 @@ func postFunction(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	response := recipes.Process(p, s)
+	service := recipes.NewService(
+		recipes.NewPuppy(config.puppy.endpoint),
+		recipes.NewGiphy(config.giphy.endpoint, config.giphy.apiToken),
+	)
+
+	response := service.Process(p, s)
 
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(response)

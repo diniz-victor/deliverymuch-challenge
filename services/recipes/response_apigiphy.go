@@ -1,4 +1,4 @@
-package apigiphy
+package recipes
 
 //GiphyResponse represents  the response from consumed giphy endpoint
 type GiphyResponse struct {

@@ -1,7 +1,7 @@
 package recipes
 
 //RecipesResponseData represents the Recipes inside the main response
-type recipesResponseData struct {
+type RecipesResponseData struct {
 	Title       string   `json:"title"`
 	Ingredients []string `json:"ingredients"`
 	Link        string   `json:"link"`
@@ -9,7 +9,7 @@ type recipesResponseData struct {
 }
 
 //RecipesResponse represents the main response
-type recipesResponse struct {
+type RecipesResponse struct {
 	Keywords []string              `json:"keywords"`
-	Recipes  []recipesResponseData `json:"recipes"`
+	Recipes  []RecipesResponseData `json:"recipes"`
 }

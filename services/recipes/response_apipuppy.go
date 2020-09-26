@@ -1,4 +1,4 @@
-package apipuppy
+package recipes
 
 //RecipePuppyResponse represents the response from consumed recipe puppy endpoint
 type RecipePuppyResponse struct {

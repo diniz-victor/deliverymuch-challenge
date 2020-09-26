@@ -1,4 +1,4 @@
-package apigiphy
+package recipes
 
 import (
 	"encoding/json"
@@ -9,12 +9,24 @@ import (
 	"net/url"
 )
 
-//GetGiphyLink get the gif link
-func GetGiphyLink(query string) string {
+type giphy struct {
+	endpoint string
+	apiKey   string
+}
+
+//NewGiphy creates a new giphy
+func NewGiphy(endpoint, apiKey string) GiphyGateway {
+	return &giphy{
+		endpoint: endpoint,
+		apiKey:   apiKey,
+	}
+}
+
+//Get get the gif link
+func (g giphy) GetGiphy(query string) string {
 	q := url.QueryEscape(query)
 	l := 1
-	k := "LyKGPGg76vk1mQ0jJM7mevHym3KM6NVC"
-	url := fmt.Sprintf("http://api.giphy.com/v1/gifs/search?q=%s&limit=%v&api_key=%s", q, l, k)
+	url := fmt.Sprintf("%s?q=%s&limit=%v&api_key=%s", g.endpoint, q, l, g.apiKey)
 
 	resp, err := http.Get(url)
 	if err != nil {

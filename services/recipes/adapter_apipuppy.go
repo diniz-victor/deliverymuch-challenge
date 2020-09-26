@@ -1,4 +1,4 @@
-package apipuppy
+package recipes
 
 import (
 	"encoding/json"
@@ -8,9 +8,18 @@ import (
 	"net/http"
 )
 
-//GetRecipePuppy get the recipe from puppy endpoint
-func GetRecipePuppy(p string) RecipePuppyResponse {
-	resp, err := http.Get(fmt.Sprintf("http://www.recipepuppy.com/api/?i=%s", p))
+type puppy struct {
+	endpoint string
+}
+
+//NewPuppy creates a new puppy
+func NewPuppy(endpoint string) PuppyGateway {
+	return &puppy{endpoint: endpoint}
+}
+
+//Get get the recipe from puppy endpoint
+func (p puppy) GetPuppy(parameters string) RecipePuppyResponse {
+	resp, err := http.Get(fmt.Sprintf("%s?i=%s", p.endpoint, parameters))
 	if err != nil {
 		log.Fatalln(err)
 	}

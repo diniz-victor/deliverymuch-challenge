@@ -7,7 +7,11 @@ import (
 	"github.com/gorilla/mux"
 )
 
+var config Config
+
 func main() {
+	config = setupConfig()
+
 	router := mux.NewRouter().StrictSlash(true)
 
 	setupRouter(router)

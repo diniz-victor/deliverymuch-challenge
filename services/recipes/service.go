@@ -3,37 +3,47 @@ package recipes
 import (
 	"sort"
 	"strings"
-
-	"github.com/deliverymuch-challenge/services/recipes/apigiphy"
-	"github.com/deliverymuch-challenge/services/recipes/apipuppy"
 )
 
+type service struct {
+	puppyGateway PuppyGateway
+	giphyGateway GiphyGateway
+}
+
+//NewService creates a new service
+func NewService(p PuppyGateway, g GiphyGateway) Service {
+	return &service{
+		puppyGateway: p,
+		giphyGateway: g,
+	}
+}
+
 //Process represents the main process
-func Process(parameters string, parametersSlice []string) recipesResponse {
-	rp := apipuppy.GetRecipePuppy(parameters)
+func (s service) Process(parameters string, parametersSlice []string) RecipesResponse {
+	rp := s.puppyGateway.GetPuppy(parameters)
 
 	sort.Slice(rp.Results, func(i, j int) bool {
 		return rp.Results[i].Title < rp.Results[j].Title
 	})
 
-	return buildRecipesResponse(rp, parametersSlice)
+	return s.buildRecipesResponse(rp, parametersSlice)
 }
 
-func buildRecipesResponse(pr apipuppy.RecipePuppyResponse, s []string) recipesResponse {
-	var r []recipesResponseData
+func (s service) buildRecipesResponse(pr RecipePuppyResponse, keywords []string) RecipesResponse {
+	var recipeResponse []RecipesResponseData
 	for _, puppyResponse := range pr.Results {
-		responseData := recipesResponseData{
+		responseData := RecipesResponseData{
 			Title:       puppyResponse.Title,
 			Ingredients: strings.Split(puppyResponse.Ingredients, ","),
 			Link:        puppyResponse.Href,
-			Gif:         apigiphy.GetGiphyLink(puppyResponse.Title),
+			Gif:         s.giphyGateway.GetGiphy(puppyResponse.Title),
 		}
 
-		r = append(r, responseData)
+		recipeResponse = append(recipeResponse, responseData)
 	}
 
-	return recipesResponse{
-		Keywords: s,
-		Recipes:  r,
+	return RecipesResponse{
+		Keywords: keywords,
+		Recipes:  recipeResponse,
 	}
 }

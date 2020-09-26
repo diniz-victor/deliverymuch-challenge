@@ -9,10 +9,9 @@ services:
         volumes:
             - './:/go/src/github.com/deliverymuch-challenge'
         environment:
-            LOG_HUMAN: "true"
-            LOG_LEVEL: "DEBUG"
-
             GIPHY_API_TOKEN: "LyKGPGg76vk1mQ0jJM7mevHym3KM6NVC"
+            GIPHY_URL: "http://api.giphy.com/v1/gifs/search"
+            PUPPY_URL: "http://www.recipepuppy.com/api/"
         entrypoint:
             - go
             - run
